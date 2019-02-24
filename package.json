@@ -1,5 +1,5 @@
 {
-  "name": "points-calc",
+  "name": "@warsawlo/points-calculator",
   "version": "1.0.0",
   "description": "Recruitment points calculator for polish highschools",
   "main": "index.js",

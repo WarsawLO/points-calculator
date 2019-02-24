@@ -10,7 +10,7 @@ Install Points Calculator
 
 ```bash
 
-yarn add @warsawlo/points-calc
+yarn add @warsawlo/points-calculator
 
 ```
 
@@ -18,7 +18,7 @@ or
 
 ```bash
 
-npm i -S @warsawlo/points-calc
+npm i -S @warsawlo/points-calculator
 
 ```
 
@@ -26,7 +26,7 @@ npm i -S @warsawlo/points-calc
 
 ```javascript
 
-import  PointsCalucator  from  '@warsawlo/points-calc'
+import  PointsCalucator  from  '@warsawlo/points-calculator'
 
 const  Calc = new PointsCalculator()
 
