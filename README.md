@@ -22,7 +22,7 @@ npm i -S @warsawlo/points-calculator
 
 ```
 
-  ## Getting started
+## Getting started
 
 ```javascript
 
@@ -39,6 +39,18 @@ Calc.setGrades({
 })
 
 console.log(Calc.calc())  // 63.5
+
+
+Calc.points.subscribe(points => {
+    console.log(points) // { examPoints: 0,
+                        //   gradesPoints: 63.5,
+                        //   otherPoints: 7,
+                        //   accomplishmentsPoints: 0,
+                        //   all: 70.5 }
+
+})
+setTimeout(() => Calc.setMerit(true), 1000)
+
 ```
 
 

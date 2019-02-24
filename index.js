@@ -1,4 +1,6 @@
-exports = class PointsCalculator{
+const { Subject } = require('rxjs')
+
+module.exports = class PointsCalculator{
     constructor(mode){
         this.mode = mode === 'secondarySchool' ? mode : 'primarySchool'
         this.examResult = {
@@ -50,16 +52,19 @@ exports = class PointsCalculator{
                     'Finalista turnieju z przedmiotu lub przedmiotów artystycznych nieobjętych ramowym planem nauczania szkoły artystycznej': 3
             }
         }
-    this._calcGradesPoints = this._calcGradesPoints.bind(this)
-    this._calcOtherPoints = this._calcOtherPoints.bind(this)
-    this._calcAccomplishmentsPoints = this._calcAccomplishmentsPoints.bind(this)
-    this._calcExamPoints = this._calcExamPoints.bind(this)
+    this.calcGradesPoints = this.calcGradesPoints.bind(this)
+    this.calcOtherPoints = this.calcOtherPoints.bind(this)
+    this.calcAccomplishmentsPoints = this.calcAccomplishmentsPoints.bind(this)
+    this.calcExamPoints = this.calcExamPoints.bind(this)
+
+    this.points = new Subject()
     }
     setExamResult(examResult){
         this.examResult = {
             ...this.examResult,
             ...examResult
         }
+        this.calc()
         return this
     }
     setGrades(grades){
@@ -67,29 +72,40 @@ exports = class PointsCalculator{
             ...this.grades,
             ...grades
         }
+        this.calc()
         return this
     }
     setAccomplishments(accomplishments){
         this.accomplishments = [ ...this.accomplishments, ...accomplishments]
+        this.calc()
         return this
     }
     setMerit(merit){
         this.other.merit = Boolean(merit)
+        this.calc()
         return this
     }
     setActivity(activity){
         this.other.activity = Boolean(activity)
-        console.log(this.other)
+        this.calc()
         return this
     }
 
     calc(){
-        return [
-            this.calcExamPoints,
-            this.calcGradesPoints,
-            this.calcOtherPoints,
-            this.calcAccomplishmentsPoints
-        ].reduce((prev, curr) => prev + curr(), 0)
+        let points = {}
+        let calculated = [
+                'examPoints',
+                'gradesPoints',
+                'otherPoints',
+                'accomplishmentsPoints'
+        ].reduce((prev, curr) => {
+            let value = this[`calc${curr.charAt(0).toUpperCase()+curr.slice(1)}`]()
+            points[curr] = value
+            return prev + value
+        }, 0)
+        points.all = calculated
+        this.points.next(points)
+        return calculated
     }
     calcExamPoints(){
         let {
