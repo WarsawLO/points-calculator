@@ -51,7 +51,7 @@ console.log(Calc.calc())  // 63.5
 Returns new PointsCalculator instance.
 
 | Param | Type | Default value | Description |
-|-|-|-|-|
+| - | - | - | - |
 | schoolType | ``string`` | ``primarySchool`` | Sets calculator mode. For primary school choose ```primarySchool```. For secondary school (gimnazjum) choose ``secondarySchool``.
 
 #### .setGrades(grades)
@@ -59,7 +59,7 @@ Returns new PointsCalculator instance.
 Returns PointsCalculator instance.
 
 | Param | Type | Description |
-|-|-|-|-|
+| - | - | - |
 | grades | ``object`` | Keys for ``grades`` object can be ``polish``, ``math``, ``firstSubject``, ``secondSubject``. Object values are integers.
 
 #### .setExamResult(examResult)
@@ -67,7 +67,7 @@ Returns PointsCalculator instance.
 Returns PointsCalculator instance.
 
 | Param | Type | Description |
-|-|-|-|-|
+| - | - | - |
 | examResult | ``Object`` | Keys for ``grades`` object can be ``polish``, ``math``, ``lang``, ``science``, ``history``. Object values are integers representing percentage results of described exam parts.
 
 #### .setAchievements(achievements)
@@ -75,7 +75,7 @@ Returns PointsCalculator instance.
 Returns PointsCalculator instance.
 
 | Param | Type | Description |
-|-|-|-|-|
+| - | - | - |
 | achievements | ``Achievement[]`` | Sets achievements. [See list of available achievements .](#achievements)
 
 #### .setMerit(merit)
@@ -83,7 +83,7 @@ Returns PointsCalculator instance.
 Returns PointsCalculator instance.
 
 | Param | Type | Description |
-|-|-|-|-|
+| - | - | - |
 | merit | ``Boolean`` | Sets merit from school report card (did student has average higher than 4.75)
 
 #### .setActivity(activity)
@@ -91,7 +91,7 @@ Returns PointsCalculator instance.
 Returns PointsCalculator instance.
 
 | Param | Type | Description |
-|-|-|-|-|
+| - | - | - |
 | activity | ``Boolean`` | Did student take part in some volunteer work or did something for the community?
 
 #### .calcGradesPoints()
