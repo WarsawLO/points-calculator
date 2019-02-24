@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Recruitment points calculator for polish highschools",
   "main": "index.js",
-  "repository": "https://github.com/warsawlo/points-calc",
+  "repository": "https://github.com/warsawlo/points-calculator",
   "author": "WarsawLO",
   "license": "MIT"
 }
