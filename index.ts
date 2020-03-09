@@ -1,13 +1,5 @@
 const { Subject } = require('rxjs');
 
-export const func1 = (person: string) => {
-    return `to jest ${person}`
-};
-
-func1('Ana');
-
-
-
 module.exports = class PointsCalculator{
     mode: string;
     examResult: {
