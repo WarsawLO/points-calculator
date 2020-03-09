@@ -3,10 +3,12 @@
   "version": "1.0.2",
   "description": "Recruitment points calculator for polish highschools",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": "https://github.com/warsawlo/points-calculator",
   "author": "WarsawLO",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^13.9.0",
     "rxjs": "^6.4.0"
   }
 }
