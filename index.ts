@@ -1,7 +1,6 @@
 const { Subject } = require('rxjs');
 
-module.exports = class PointsCalculator{
-    mode: string;
+export interface PointsCalculatorInterface {
     examResult: {
         polish: number,
         math: number,
@@ -42,76 +41,91 @@ module.exports = class PointsCalculator{
             'Laureat konkursu tematycznego lub interdyscyplinarnego': number,
             'Finalista konkursu tematycznego lub interdyscyplinarnego': number,
             'Finalista konkursu przedmiotowego': number,
-            // 'Laureat konkursu tematycznego lub interdyscyplinarnego': 7,
-            // 'Finalista konkursu tematycznego lub interdyscyplinarnego': 5,
             'Finalista konkursu z przedmiotu lub przedmiotów artystycznych objętych ramowym planem nauczania szkoły artystycznej': number,
             'Laureat turnieju z przedmiotu lub przedmiotów artystycznych nieobjętych ramowym planem nauczania szkoły artystycznej': number,
             'Finalista turnieju z przedmiotu lub przedmiotów artystycznych nieobjętych ramowym planem nauczania szkoły artystycznej': number
         }
     };
+
+    setExamResult(examResult: object): any;
+    setGrades(grades: object) : any;
+    setAccomplishments(accomplishments: string[]): any;
+    setMerit(merit: boolean): any;
+    setActivity(activity: boolean): any;
+    calc(): number;
+    calcExamPoints(): number;
+    calcGradesPoints(): number;
+    calcGradesPoints(): number;
+    calcAccomplishmentsPoints(): number;
+    calcOtherPoints(): number;
+}
+
+module.exports = class PointsCalculator implements PointsCalculatorInterface {
+    constructor(mode: 'secondarySchool' | 'primarySchool'){
+        this.mode = mode === 'secondarySchool' ? mode : 'primarySchool';
+        this.points = new Subject();
+
+        this.calcGradesPoints = this.calcGradesPoints.bind(this);
+        this.calcOtherPoints = this.calcOtherPoints.bind(this);
+        this.calcAccomplishmentsPoints = this.calcAccomplishmentsPoints.bind(this);
+        this.calcExamPoints = this.calcExamPoints.bind(this);
+    }
+
+    mode: 'secondarySchool' | 'primarySchool';
+
     points: {
         curr: any,
         all: any,
         next: any
     };
 
-    constructor(mode: string){
-        this.mode = mode === 'secondarySchool' ? mode : 'primarySchool';
-        this.examResult = {
-            polish: 0,
-            math: 0,
-            lang: 0,
-            science: 0,
-            history: 0
-        };
-        this.accomplishments = [];
-        this.grades = {
-            polish: 0,
-            math: 0,
-            firstSubject: 0,
-            secondSubject: 0
-        };
-        this.other = {
-            merit: false,
-            activity: false
-        };
-        this.mapping = {
-            grades: {
-                0: 0,
-                1: 0,
-                2: 2,
-                3: 8,
-                4: 14,
-                5: 17,
-                6: 18
-            },
-            other: {
-                merit: 7,
-                activity: 3
-            },
-            accomplishments: {
-                    'Co najmniej podwójny finalista konkursu przedmiotowego': 10,
-                    'Co najmniej podwójny laureatem konkursu tematycznego lub interdyscyplinarnego': 7,
-                    'Co najmniej podwójny finalista konkursu tematycznego lub interdyscyplinarnego': 5,
-                    'Finalista konkursu przedmiotowego ': 7,
-                    'Laureat konkursu tematycznego lub interdyscyplinarnego': 5,
-                    'Finalista konkursu tematycznego lub interdyscyplinarnego': 3,
-                    'Finalista konkursu przedmiotowego': 10,
-                    // 'Laureat konkursu tematycznego lub interdyscyplinarnego': 7,
-                    // 'Finalista konkursu tematycznego lub interdyscyplinarnego': 5,
-                    'Finalista konkursu z przedmiotu lub przedmiotów artystycznych objętych ramowym planem nauczania szkoły artystycznej': 10,
-                    'Laureat turnieju z przedmiotu lub przedmiotów artystycznych nieobjętych ramowym planem nauczania szkoły artystycznej': 4,
-                    'Finalista turnieju z przedmiotu lub przedmiotów artystycznych nieobjętych ramowym planem nauczania szkoły artystycznej': 3
-            }
-        };
-
-        this.calcGradesPoints = this.calcGradesPoints.bind(this);
-        this.calcOtherPoints = this.calcOtherPoints.bind(this);
-        this.calcAccomplishmentsPoints = this.calcAccomplishmentsPoints.bind(this);
-        this.calcExamPoints = this.calcExamPoints.bind(this);
-
-        this.points = new Subject()
-    }
+    examResult = {
+        polish: 0,
+        math: 0,
+        lang: 0,
+        science: 0,
+        history: 0
+    };
+    accomplishments = [];
+    grades = {
+        polish: 0,
+        math: 0,
+        firstSubject: 0,
+        secondSubject: 0
+    };
+    other = {
+        merit: false,
+        activity: false
+    };
+    mapping = {
+        grades: {
+            0: 0,
+            1: 0,
+            2: 2,
+            3: 8,
+            4: 14,
+            5: 17,
+            6: 18
+        },
+        other: {
+            merit: 7,
+            activity: 3
+        },
+        accomplishments: {
+            'Co najmniej podwójny finalista konkursu przedmiotowego': 10,
+            'Co najmniej podwójny laureatem konkursu tematycznego lub interdyscyplinarnego': 7,
+            'Co najmniej podwójny finalista konkursu tematycznego lub interdyscyplinarnego': 5,
+            'Finalista konkursu przedmiotowego ': 7,
+            'Laureat konkursu tematycznego lub interdyscyplinarnego': 5,
+            'Finalista konkursu tematycznego lub interdyscyplinarnego': 3,
+            'Finalista konkursu przedmiotowego': 10,
+            // 'Laureat konkursu tematycznego lub interdyscyplinarnego': 7,
+            // 'Finalista konkursu tematycznego lub interdyscyplinarnego': 5,
+            'Finalista konkursu z przedmiotu lub przedmiotów artystycznych objętych ramowym planem nauczania szkoły artystycznej': 10,
+            'Laureat turnieju z przedmiotu lub przedmiotów artystycznych nieobjętych ramowym planem nauczania szkoły artystycznej': 4,
+            'Finalista turnieju z przedmiotu lub przedmiotów artystycznych nieobjętych ramowym planem nauczania szkoły artystycznej': 3
+        }
+    };
 
     setExamResult(examResult: object){
         this.examResult = {

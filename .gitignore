@@ -62,3 +62,7 @@ typings/
 
 # ide files
 .idea/
+
+# output files
+index.js
+index.d.ts
