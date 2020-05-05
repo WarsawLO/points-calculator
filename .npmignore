@@ -63,5 +63,3 @@ typings/
 # ide files
 .idea/
 
-# output files
-/lib
