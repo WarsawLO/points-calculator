@@ -1,14 +1,26 @@
 {
   "name": "@warsawlo/points-calculator",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Recruitment points calculator for polish highschools",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "lib/index.js",
   "repository": "https://github.com/warsawlo/points-calculator",
   "author": "WarsawLO",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf ./lib",
+    "update-link": "npm run clean && tsc && npm rm @warsawlo/points-calculator -g && npm link"
+  },
+  "files": [
+    "lib/index.d.ts",
+    "lib/**/*"
+  ],
   "dependencies": {
-    "@types/node": "^13.9.0",
     "rxjs": "^6.4.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.9.1",
+    "typescript": "^3.8.3"
   }
 }
