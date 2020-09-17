@@ -14,6 +14,8 @@ export interface InputData{
     accomplishments: Accomplishment[]
 }
 
+export type WatchFunction = (points: CalculatedPoints) => void
+
 export interface ExamResult {
     [polish: string]: number | null
     math: number | null

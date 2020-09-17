@@ -6,9 +6,8 @@ import {
     Grades,
     GradesPoints,
     InputData,
-    Config
+    Config, WatchFunction
 } from "./types";
-import {Observable, Subject} from "rxjs";
 import {initialCalculatedPoints, initialInputData} from "./utils/initialData";
 import {isExamResultValid, isGradeValid} from "./utils/validators";
 
@@ -17,28 +16,29 @@ export class PointsCalculator {
     readonly config: Config;
     private inputData: InputData = {...initialInputData};
     private calculatedPoints: CalculatedPoints = {...initialCalculatedPoints};
-    private points$: Subject<CalculatedPoints>;
+    private watchFn?: WatchFunction
 
     constructor(config: Config){
         this.config = config;
-        this.points$ = new Subject();
 
         this.calcGradesPoints = this.calcGradesPoints.bind(this);
         this.calcAccomplishmentsPoints = this.calcAccomplishmentsPoints.bind(this);
         this.calcExamResultPoints = this.calcExamResultPoints.bind(this);
     }
-    watch(): Observable<CalculatedPoints> {
-        return this.points$
-            .asObservable()
+
+    watch(cb: WatchFunction) {
+        this.watchFn = cb;
     }
+
     get points(): CalculatedPoints{
         return this.calculatedPoints;
     }
 
     private savePoints(points: CalculatedPoints){
         this.calculatedPoints = points;
-        console.log('next log')
-        this.points$.next(this.calculatedPoints);
+
+        if(typeof this.watchFn === 'function')
+            this.watchFn(this.calculatedPoints)
     }
 
     get data(){
