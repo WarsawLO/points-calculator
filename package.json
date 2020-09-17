@@ -1,6 +1,6 @@
 {
   "name": "@warsawlo/points-calculator",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Recruitment points calculator for polish highschools",
   "main": "lib/index.js",
   "repository": "https://github.com/warsawlo/points-calculator",
