@@ -22,7 +22,7 @@ interface InputData {
 }
 ```
 
-### `WatchFunction`
+## `WatchFunction`
 ```typescript
 type WatchFunction = (points: CalculatedPoints) => void
 ```
